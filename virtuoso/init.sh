@@ -33,7 +33,7 @@ for var in "${DATASET_VARS[@]}"; do
       log "$var → path='$path' graph='$graph'"
       log "  Extracting → $target"
       mkdir -p "$target"
-      #tar -xzf "$path" -C "$target" --strip-components=1
+      tar -xzf "$path" -C "$target" --strip-components=1
       load_path="$target"
       ;;
     *)
@@ -46,13 +46,9 @@ for var in "${DATASET_VARS[@]}"; do
   log "  Files: $(ls "$load_path" | paste -sd, - 2>/dev/null || echo '<empty>')"
   # Clear load list
   printf 'DELETE FROM DB.DBA.LOAD_LIST;\n' >> "$SQL_FILE"
-  for i in {0..19}; do
-    printf "ld_dir('%s','out_%03d.nt','%s');\n" "$target" "$i" "$graph" >> "$SQL_FILE"
-    printf "rdf_loader_run();\n" >> "$SQL_FILE"
-    printf "checkpoint;\n" >> "$SQL_FILE"
-  done
-
-  printf "ld_dir('%s','out0.nt','%s');\n" "$target" "$graph" >> "$SQL_FILE"
+  
+  # Load
+  printf "ld_dir('%s','*','%s');\n" "$target" "$graph" >> "$SQL_FILE"
   printf "rdf_loader_run();\n" >> "$SQL_FILE"
   printf "checkpoint;\n" >> "$SQL_FILE"
   
