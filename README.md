@@ -1,4 +1,4 @@
-# FedBench HeFQUIN
+# HeFQUIN FedBench
 
 This project is intended to be used as a benchmark for analyzing the behavior of the HeFQUIN engine under various conditions.
 
