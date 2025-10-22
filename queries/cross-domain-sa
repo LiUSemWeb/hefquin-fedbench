@@ -1,0 +1,96 @@
+
+# CD1
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?predicate ?object WHERE {
+  VALUES (?g1 ?g2 ) { ( ex:dbpedia ex:nyt ) }
+  { GRAPH ?g1 { dbr:Barack_Obama ?predicate ?object } }
+  UNION
+  { GRAPH ?g2 {
+       ?subject owl:sameAs dbr:Barack_Obama .
+       ?subject ?predicate ?object } }
+}
+
+# CD2
+PREFIX nyt: <http://data.nytimes.com/elements/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?party ?page WHERE {
+   VALUES (?g1 ?g2) { ( ex:dbpedia ex:nyt ) }
+   GRAPH ?g1 { dbr:Barack_Obama dbo:party ?party }
+   GRAPH ?g2 { ?x nyt:topicPage ?page .
+               ?x owl:sameAs dbr:Barack_Obama }
+}
+
+# CD3
+PREFIX nyt: <http://data.nytimes.com/elements/>
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?president ?party ?page WHERE {
+   VALUES (?g1 ?g2) { ( ex:dbpedia ex:nyt ) }
+   GRAPH ?g1 { ?president a dbo:President .
+               ?president dbo:nationality dbr:United_States .
+               ?president dbo:party ?party }
+   GRAPH ?g2 { ?x nyt:topicPage ?page .
+               ?x owl:sameAs ?president }
+}
+
+# CD4
+PREFIX nyt: <http://data.nytimes.com/elements/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?actor ?news ?g1 ?g2
+WHERE {
+   VALUES (?g1 ?g2) { ( ex:lmdb ex:nyt ) }
+   GRAPH ?g1 { ?film <http://purl.org/dc/terms/title> 'Tarzan' .
+               ?film <http://data.linkedmdb.org/resource/movie/actor> ?actor .
+               ?actor owl:sameAs ?x }
+   GRAPH ?g2 { ?y owl:sameAs ?x .
+               ?y nyt:topicPage ?news }
+}
+
+# CD5
+PREFIX dbr: <http://dbpedia.org/resource/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?film ?director ?genre
+WHERE {
+   VALUES (?g1 ?g2) { ( ex:dbpedia ex:lmdb ) }
+   GRAPH ?g1 { ?film dbo:director  ?director .
+               ?director dbo:nationality dbr:Italy }
+   GRAPH ?g2 { ?x owl:sameAs ?film .
+               ?x <http://data.linkedmdb.org/resource/movie/genre> ?genre }
+}
+
+# CD6
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX geo:  <http://www.geonames.org/ontology#>
+PREFIX ex:   <http://example.org/graph/>
+SELECT ?name ?location ?germany
+WHERE {
+VALUES (?g1 ?g2) { ( ex:jamendo ex:geonames) }
+   GRAPH ?g1 { ?artist foaf:name ?name .
+                        ?artist foaf:based_near ?location }
+   GRAPH ?g2 { ?location geo:parentFeature ?germany .
+                         ?germany geo:name 'Federal Republic of Germany' }
+}
+
+# CD7
+PREFIX nyt: <http://data.nytimes.com/elements/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX geo: <http://www.geonames.org/ontology#>
+PREFIX ex:  <http://example.org/graph/>
+SELECT ?location ?news
+WHERE {
+VALUES (?g1 ?g2){ (ex:nyt ex:nyt) (ex:nyt ex:geonames) } 
+   GRAPH ?g1 { ?location geo:parentFeature ?parent . 
+                ?y owl:sameAs ?location .
+                ?y nyt:topicPage ?news }
+   GRAPH ?g2 { ?parent geo:name 'California' }
+}
