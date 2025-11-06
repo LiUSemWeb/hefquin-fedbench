@@ -1,9 +1,0 @@
-services:
-  sp2bench:
-    image: debian:bookworm-slim
-    platform: "linux/386"      # 32-bit userspace
-    container_name: sp2b_env
-    entrypoint: ["/bin/bash"]
-    tty: true           # keeps the container interactive
-    volumes:
-      - ./bin:/sp2b_bin
