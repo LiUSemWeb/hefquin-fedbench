@@ -1,0 +1,21 @@
+
+services:
+  hdt-converter:
+    image: rdfhdt/hdt-java
+    volumes:
+      - ../datasets:/datasets
+      - ./convert-and-hdt.sh:/convert-and-hdt.sh
+    entrypoint: ["bash", "-c", "/convert-and-hdt.sh"]
+    environment:
+      JAVA_OPTIONS: "-Xmx20g"
+      DATASET_1: "/datasets/NYT/"               # 335197 triples
+      DATASET_2: "../datasets/LMDB/"            # 6147996 triples
+      DATASET_3: "../datasets/Jamendo/"         # 1049647 triples
+      DATASET_4: "../datasets/ChEBI/"           # 4772706 triples
+      DATASET_5: "../datasets/DrugBank/"        # 517023 triples
+      DATASET_6: "../datasets/GeoNames/"        # 107950085 triples
+      DATASET_7: "../datasets/KEGG/"            # 1090830 triples
+      DATASET_8: "../datasets/SP2B/"            # 10000457 triples
+      DATASET_9: "../datasets/SWDFood/"         # 103595 triples
+      DATASET_10: "../datasets/DBPedia-Subset/" # 42849609 triples
+
