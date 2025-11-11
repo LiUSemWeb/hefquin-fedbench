@@ -1,0 +1,13 @@
+{
+  "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@ldf/server/^3.0.0/components/context.jsonld",
+  "@id": "urn:ldf-server:my",
+  "import": "preset-qpf:config-defaults.json",
+
+  "datasources": [
+    {
+      "@type": "HdtDatasource",
+      "datasourcePath": "dbpedia",
+      "hdtFile": "/datasets/DBPedia-Subset/combined/combined.hdt"
+    }
+  ]
+}
