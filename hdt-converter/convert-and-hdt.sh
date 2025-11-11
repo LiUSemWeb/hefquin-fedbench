@@ -20,18 +20,11 @@ fi
 for dataset in "${DATASETS[@]}"; do
   echo "Processing dataset: $dataset"
 
-  # Find all RDF files (NT, TTL, RDF, compressed versions)
-  find "$dataset" -type f \( \
-    -iname '*.nt' -o -iname '*.ttl' -o -iname '*.rdf' -o -iname '*.n3' \
-  \) | while IFS= read -r filename; do
-    echo "  Converting: $filename"
+  # Build output path
+  out_path="/datasets/${dataset}/combined/${dataset}.hdt"
 
-    # Build output path
-    out_path="${filename}.hdt"
-
-    # Run HDT conversion
-    rdf2hdt.sh "$filename" "$out_path"
-  done
+  # Run HDT conversion
+  rdf2hdt.sh "/datasets/${dataset}/combined/combined.nt" "$out_path"
 done
 
 echo "All datasets processed."
