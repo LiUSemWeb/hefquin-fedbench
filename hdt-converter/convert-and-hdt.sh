@@ -21,7 +21,7 @@ for dataset in "${DATASETS[@]}"; do
   echo "Processing dataset: $dataset"
 
   # Build output path
-  out_path="/datasets/${dataset}/combined/${dataset}.hdt"
+  out_path="/datasets/${dataset}/combined/combined.hdt"
 
   # Run HDT conversion
   rdf2hdt.sh "/datasets/${dataset}/combined/combined.nt" "$out_path"
