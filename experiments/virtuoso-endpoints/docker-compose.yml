@@ -1,131 +1,152 @@
 
 services:
-  virtuoso-nyt:
+  chebi:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_1: "/datasets/NYT/|http://example.org/graph/nyt"                 #    335197 triples
+      DATASET_4: "/datasets/ChEBI/|http://example.org/graph/chebi"
     ports:
-      - "8890:8890"
+      - "3000:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-lmdb:
+  dbpedia-subset: 
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_2: "/datasets/LMDB/|http://example.org/graph/lmdb"               #   6147996 triples
+      DATASET_10: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia"
     ports:
-      - "8891:8890"
+      - "3001:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-jamendo:
+  drugbank: 
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_3: "/datasets/Jamendo/|http://example.org/graph/jamendo"         #   1049647 triples
+      DATASET_5: "/datasets/DrugBank/|http://example.org/graph/drugbank"
     ports:
-      - "8892:8890"
+      - "3002:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-chebi:
+  geonames: 
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_4: "/datasets/ChEBI/|http://example.org/graph/chebi"             #   4772706 triples
+      DATASET_6: "/datasets/GeoNames/|http://example.org/graph/geonames"
     ports:
-      - "8893:8890"
+      - "3003:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-drugbank:
+  jamendo:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_5: "/datasets/DrugBank/|http://example.org/graph/drugbank"       #    517023 triples
+      DATASET_3: "/datasets/Jamendo/|http://example.org/graph/jamendo"
     ports:
-      - "8894:8890"
+      - "3004:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  # virtuoso-geonames:
-  #   image: openlink/virtuoso-opensource-7:7.2.16
-  #   environment:
-  #     DBA_PASSWORD: dba
-  #     DATASET_6: "/datasets/GeoNames/|http://example.org/graph/geonames"       # 107950085 triples
-  #   ports:
-  #     - "8895:8890"
-  #   volumes:
-  #     - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
-  #     - ../../datasets:/datasets
-  #     - ./init.sh:/init.sh
-  #   entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
-
-  virtuoso-kegg:
+  kegg:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"               #  10000457 triples
+      DATASET_8: "/datasets/KEGG/|http://example.org/graph/sp2b"
     ports:
-      - "8896:8890"
+      - "3005:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-sp2b:
+  lmdb:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"               #  10000457 triples
+      DATASET_2: "/datasets/LMDB/|http://example.org/graph/lmdb"
     ports:
-      - "8897:8890"
+      - "3006:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  virtuoso-swdfood:
+  nyt:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_9: "/datasets/SWDFood/|http://example.org/graph/swdfood"         #    103595 triples
+      DATASET_1: "/datasets/NYT/|http://example.org/graph/nyt"
     ports:
-      - "8898:8890"
+      - "3007:8890"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
       - ./init.sh:/init.sh
     entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
 
-  # virtuoso-dbpedia-subset:
-  #   image: openlink/virtuoso-opensource-7:7.2.16
-  #   environment:
-  #     DBA_PASSWORD: dba
-  #     DATASET_10: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia" #  42849609 triples
-  #   ports:
-  #     - "8899:8890"
-  #   volumes:
-  #     - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
-  #     - ../../datasets:/datasets
-  #     - ./init.sh:/init.sh
-  #   entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+  sp2b:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"
+    ports:
+      - "3008:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  swdfood:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_9: "/datasets/SWDFood/|http://example.org/graph/swdfood"
+    ports:
+      - "3009:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  nginx-proxy:
+    image: nginx:latest
+    container_name: virtuoso-proxy
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - chebi          # 4772706 triples
+      - dbpedia-subset # 42849609 triples
+      - drugbank       # 517023 triples
+      - geonames       # 107950085 triples
+      - jamendo        # 1049647 triples
+      - kegg           # 1090830 triples
+      - lmdb           # 6147996 triples
+      - nyt            # 335197 triples
+      - sp2b           # 10000457 triples
+      - swdfood        # 103595 triples
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
