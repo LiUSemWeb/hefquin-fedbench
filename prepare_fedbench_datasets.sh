@@ -26,7 +26,7 @@ set -o pipefail  # catch pipeline errors
 # -------------------------------------------------------------
 # CONFIG
 # -------------------------------------------------------------
-export JAVA_TOOL_OPTIONS="-Djdk.xml.entityExpansionLimit=200000"
+export JAVA_TOOL_OPTIONS="-Djdk.xml.entityExpansionLimit=400000"
 
 # Colors
 RED='\033[0;31m'
@@ -104,7 +104,7 @@ done
 section "Cleaning datasets"
 
 # info "Cleaning ChEBI..."
-# ./scripts/clean.py datasets/ChEBI/chebi.n3
+./scripts/clean.py datasets/ChEBI/chebi.n3
 info "Cleaning Jamendo..."
 ./scripts/clean_jamendo.py datasets/Jamendo/jamendo.rdf
 ./scripts/clean_jamendo.py datasets/Jamendo/mbz_jamendo.rdf
@@ -122,7 +122,7 @@ info "Cleaning SWDFood..."
 ./scripts/clean_rdf.py datasets/SWDFood/fis-2010-complete.rdf
 ./scripts/clean_rdf.py datasets/SWDFood/iswc-2008-complete.rdf
 
-ok "All cleaning scripts executed"
+# ok "All cleaning scripts executed"
 
 # -------------------------------------------------------------
 # STEP 3: Validate with RIOT
@@ -163,8 +163,24 @@ validate_dataset() {
     echo
 }
 
-for dir in ChEBI DBPedia-Subset DrugBank GeoNames Jamendo KEGG LMDB NYT SP2B SWDFood; do
+for dir in ChEBI DrugBank DBPedia-Subset GeoNames Jamendo KEGG LMDB NYT SP2B SWDFood; do
     validate_dataset datasets/"$dir"
+done
+
+# -------------------------------------------------------------
+# STEP 4: Combine RDF files as NT (e.g. for HDT conversion)
+# -------------------------------------------------------------
+section "Combining RDF datasets with Apache Jena RIOT"
+
+for dir in ChEBI DrugBank DBPedia-Subset GeoNames Jamendo KEGG LMDB NYT SP2B SWDFood; do
+    info "→ Combining ${dir}..."
+    mkdir -p "datasets/${dir}/combined"
+
+    {
+        find "datasets/${dir}" -maxdepth 1 -type f \( \
+            -name "*.ttl" -o -name "*.nt" -o -name "*.rdf" -o -name "*.owl" -o -name "*.n3" \
+        \) -print0 | xargs -0 riot --output=NT 2>/dev/null || true;
+    } | LC_ALL=C sort -u > "datasets/${dir}/combined/combined.nt"
 done
 
 # -------------------------------------------------------------
