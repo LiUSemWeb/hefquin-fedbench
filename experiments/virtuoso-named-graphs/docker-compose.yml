@@ -4,16 +4,16 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_1: "/datasets/NYT/|http://example.org/graph/nyt"                 #    335197 triples
-      DATASET_2: "/datasets/LMDB/|http://example.org/graph/lmdb"               #   6147996 triples
-      DATASET_3: "/datasets/Jamendo/|http://example.org/graph/jamendo"         #   1049647 triples
-      DATASET_4: "/datasets/ChEBI/|http://example.org/graph/chebi"             #   4772706 triples
-      DATASET_5: "/datasets/DrugBank/|http://example.org/graph/drugbank"       #    517023 triples
-      DATASET_6: "/datasets/GeoNames/|http://example.org/graph/geonames"       # 107950085 triples
-      DATASET_7: "/datasets/KEGG/|http://example.org/graph/kegg"               #   1090830 triples
-      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"               #  10000457 triples
-      DATASET_9: "/datasets/SWDFood/|http://example.org/graph/swdfood"         #    103595 triples
-      DATASET_10: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia" #  42849609 triples
+      DATASET_1: "/datasets/ChEBI/|http://example.org/graph/chebi"             #   4772706 triples
+      DATASET_2: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia"  #  42849609 triples
+      DATASET_3: "/datasets/DrugBank/|http://example.org/graph/drugbank"       #    517023 triples
+      DATASET_4: "/datasets/GeoNames/|http://example.org/graph/geonames"       # 107950085 triples
+      DATASET_5: "/datasets/Jamendo/|http://example.org/graph/jamendo"         #   1049647 triples
+      DATASET_6: "/datasets/KEGG/|http://example.org/graph/kegg"               #   1090830 triples
+      DATASET_7: "/datasets/LMDB/|http://example.org/graph/lmdb"               #   6147996 triples
+      DATASET_8: "/datasets/NYT/|http://example.org/graph/nyt"                 #    335197 triples
+      DATASET_9: "/datasets/SP2B/|http://example.org/graph/sp2b"               #  10000457 triples
+      DATASET_10: "/datasets/SWDFood/|http://example.org/graph/swdfood"        #    103595 triples
     ports:
       - "8890:8890"
     volumes:
