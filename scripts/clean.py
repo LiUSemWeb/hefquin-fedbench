@@ -24,6 +24,7 @@ NON_PORT_COLON_IN_IRI = re.compile(r"(<https?://[^>]*?/[^>]*?):(?=[^>]*>)")
 
 def fix_iri(m):
     iri = m.group(1)
+    iri = iri.replace("", "%20") # <control> character
     iri = iri.replace(" ", "%20")
     iri = iri.replace('"', "%22")
     iri = iri.replace("}", "%7D")
