@@ -1,0 +1,251 @@
+
+services:
+  ldf-chebi:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/chebi.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-dbpedia-subset:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3001:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/dbpedia-subset.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-drugbank:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3002:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/drugbank.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-geonames:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3003:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/geonames.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-jamendo:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3004:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/jamendo.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-kegg:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3005:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/kegg.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-lmdb:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3006:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/lmdb.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-nyt:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3007:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/nyt.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-sp2b:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3008:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/sp2b.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  ldf-swdfood:
+    image: linkeddatafragments/server:v3.3.0
+    ports:
+      - "3009:3000"
+    volumes:
+      - ../../datasets:/datasets
+      - ./configs/swdfood.json:/config.json
+    command: ["/config.json", "3000", "1"]
+
+  sparql-chebi:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_4: "/datasets/ChEBI/|http://example.org/graph/chebi"
+    ports:
+      - "8890:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-dbpedia-subset: 
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_10: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia"
+    ports:
+      - "8891:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-drugbank: 
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_5: "/datasets/DrugBank/|http://example.org/graph/drugbank"
+    ports:
+      - "8892:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-geonames: 
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_6: "/datasets/GeoNames/|http://example.org/graph/geonames"
+    ports:
+      - "8893:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-jamendo:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_3: "/datasets/Jamendo/|http://example.org/graph/jamendo"
+    ports:
+      - "8894:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-kegg:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_8: "/datasets/KEGG/|http://example.org/graph/sp2b"
+    ports:
+      - "8895:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-lmdb:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_2: "/datasets/LMDB/|http://example.org/graph/lmdb"
+    ports:
+      - "8896:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-nyt:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_1: "/datasets/NYT/|http://example.org/graph/nyt"
+    ports:
+      - "8897:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-sp2b:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"
+    ports:
+      - "8898:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  sparql-swdfood:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_9: "/datasets/SWDFood/|http://example.org/graph/swdfood"
+    ports:
+      - "8899:8890"
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  nginx-proxy:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ldf-chebi             # 4772706 triples
+      - ldf-dbpedia-subset    # 42849609 triples
+      - ldf-drugbank          # 517023 triples
+      - ldf-geonames          # 107950085 triples
+      - ldf-jamendo           # 1049647 triples
+      - ldf-kegg              # 1090830 triples
+      - ldf-lmdb              # 6147996 triples
+      - ldf-nyt               # 335197 triples
+      - ldf-sp2b              # 10000457 triples
+      - ldf-swdfood           # 103595 triples
+      - sparql-chebi          # 4772706 triples
+      - sparql-dbpedia-subset # 42849609 triples
+      - sparql-drugbank       # 517023 triples
+      - sparql-geonames       # 107950085 triples
+      - sparql-jamendo        # 1049647 triples
+      - sparql-kegg           # 1090830 triples
+      - sparql-lmdb           # 6147996 triples
+      - sparql-nyt            # 335197 triples
+      - sparql-sp2b           # 10000457 triples
+      - sparql-swdfood        # 103595 triples
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
