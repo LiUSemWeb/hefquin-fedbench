@@ -15,7 +15,7 @@ services:
       - "3001:3000"
     volumes:
       - ../../datasets:/datasets
-      - ./configs/dbpedia-subset.json:/config.json
+      - ./configs/dbpedia.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   drugbank:
