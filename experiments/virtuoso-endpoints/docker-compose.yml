@@ -132,7 +132,6 @@ services:
 
   nginx-proxy:
     image: nginx:latest
-    container_name: virtuoso-proxy
     ports:
       - "80:80"
     extra_hosts:
