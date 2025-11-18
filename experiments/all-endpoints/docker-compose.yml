@@ -94,7 +94,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_4: "/datasets/ChEBI/|http://example.org/graph/chebi"
+      DATASET_4: "/datasets/ChEBI/combined|http://example.org/graph/chebi"
     ports:
       - "8890:8890"
     volumes:
@@ -107,7 +107,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_10: "/datasets/DBPedia-Subset/|http://example.org/graph/dbpedia"
+      DATASET_10: "/datasets/DBPedia-Subset/combined|http://example.org/graph/dbpedia"
     ports:
       - "8891:8890"
     volumes:
@@ -120,7 +120,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_5: "/datasets/DrugBank/|http://example.org/graph/drugbank"
+      DATASET_5: "/datasets/DrugBank/combined|http://example.org/graph/drugbank"
     ports:
       - "8892:8890"
     volumes:
@@ -133,7 +133,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_6: "/datasets/GeoNames/|http://example.org/graph/geonames"
+      DATASET_6: "/datasets/GeoNames/combined|http://example.org/graph/geonames"
     ports:
       - "8893:8890"
     volumes:
@@ -146,7 +146,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_3: "/datasets/Jamendo/|http://example.org/graph/jamendo"
+      DATASET_3: "/datasets/Jamendo/combined|http://example.org/graph/jamendo"
     ports:
       - "8894:8890"
     volumes:
@@ -159,7 +159,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/KEGG/|http://example.org/graph/sp2b"
+      DATASET_8: "/datasets/KEGG/combined|http://example.org/graph/sp2b"
     ports:
       - "8895:8890"
     volumes:
@@ -172,7 +172,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_2: "/datasets/LMDB/|http://example.org/graph/lmdb"
+      DATASET_2: "/datasets/LMDB/combined|http://example.org/graph/lmdb"
     ports:
       - "8896:8890"
     volumes:
@@ -185,7 +185,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_1: "/datasets/NYT/|http://example.org/graph/nyt"
+      DATASET_1: "/datasets/NYT/combined|http://example.org/graph/nyt"
     ports:
       - "8897:8890"
     volumes:
@@ -198,7 +198,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/SP2B/|http://example.org/graph/sp2b"
+      DATASET_8: "/datasets/SP2B/combined|http://example.org/graph/sp2b"
     ports:
       - "8898:8890"
     volumes:
@@ -211,7 +211,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_9: "/datasets/SWDFood/|http://example.org/graph/swdfood"
+      DATASET_9: "/datasets/SWDFood/combined|http://example.org/graph/swdfood"
     ports:
       - "8899:8890"
     volumes:
