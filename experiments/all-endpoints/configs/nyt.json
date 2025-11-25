@@ -7,8 +7,7 @@
     {
       "@type": "HdtDatasource",
       "datasourcePath": "nyt",
-      "hdtFile": "/datasets/NYT/combined/combined.hdt",
-      "defaultMimeType": "application/n-triples"
+      "hdtFile": "/datasets/NYT/combined/combined.hdt"
     }
   ]
 }
