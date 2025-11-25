@@ -15,7 +15,7 @@ services:
       - "3001:3000"
     volumes:
       - ../../datasets:/datasets
-      - ./configs/dbpedia-subset.json:/config.json
+      - ./configs/dbpedia.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-drugbank:
@@ -228,26 +228,26 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on:
       # TPF/brTPF
-      - ldf-chebi
-      - ldf-dbpedia-subset
-      - ldf-drugbank
-      - ldf-geonames
-      - ldf-jamendo
-      - ldf-kegg
-      - ldf-lmdb
+      # - ldf-chebi
+      # - ldf-dbpedia-subset
+      # - ldf-drugbank
+      # - ldf-geonames
+      # - ldf-jamendo
+      # - ldf-kegg
+      # - ldf-lmdb
       - ldf-nyt
-      - ldf-sp2b
-      - ldf-swdfood
+      # - ldf-sp2b
+      # - ldf-swdfood
       # SPARQL
-      - sparql-chebi
-      - sparql-dbpedia-subset
-      - sparql-drugbank
-      - sparql-geonames
-      - sparql-jamendo
-      - sparql-kegg
-      - sparql-lmdb
+      # - sparql-chebi
+      # - sparql-dbpedia-subset
+      # - sparql-drugbank
+      # - sparql-geonames
+      # - sparql-jamendo
+      # - sparql-kegg
+      # - sparql-lmdb
       - sparql-nyt
-      - sparql-sp2b
-      - sparql-swdfood
+      # - sparql-sp2b
+      # - sparql-swdfood
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
