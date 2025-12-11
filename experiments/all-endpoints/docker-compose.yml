@@ -2,8 +2,6 @@
 services:
   ldf-chebi:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3000:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/chebi.json:/config.json
@@ -11,8 +9,6 @@ services:
 
   ldf-dbpedia:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3001:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/dbpedia.json:/config.json
@@ -20,8 +16,6 @@ services:
 
   ldf-drugbank:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3002:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/drugbank.json:/config.json
@@ -29,8 +23,6 @@ services:
 
   ldf-geonames:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3003:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/geonames.json:/config.json
@@ -38,8 +30,6 @@ services:
 
   ldf-jamendo:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3004:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/jamendo.json:/config.json
@@ -47,8 +37,6 @@ services:
 
   ldf-kegg:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3005:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/kegg.json:/config.json
@@ -56,8 +44,6 @@ services:
 
   ldf-lmdb:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3006:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/lmdb.json:/config.json
@@ -65,8 +51,6 @@ services:
 
   ldf-nyt:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3007:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/nyt.json:/config.json
@@ -74,8 +58,6 @@ services:
 
   ldf-sp2b:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3008:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/sp2b.json:/config.json
@@ -83,8 +65,6 @@ services:
 
   ldf-swdfood:
     image: linkeddatafragments/server:v3.3.0
-    ports:
-      - "3009:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/swdfood.json:/config.json
@@ -94,9 +74,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_4: "/datasets/ChEBI/combined|http://localhost/sparql/chebi"
-    ports:
-      - "8890:8890"
+      DATASET: "/datasets/ChEBI/combined|http://localhost/sparql/chebi"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -107,9 +85,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_10: "/datasets/DBPedia-Subset/combined|http://localhost/sparql/dbpedia"
-    ports:
-      - "8891:8890"
+      DATASET: "/datasets/DBPedia-Subset/combined|http://localhost/sparql/dbpedia"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -120,9 +96,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_5: "/datasets/DrugBank/combined|http://localhost/sparql/drugbank"
-    ports:
-      - "8892:8890"
+      DATASET: "/datasets/DrugBank/combined|http://localhost/sparql/drugbank"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -133,9 +107,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_6: "/datasets/GeoNames/combined|http://localhost/sparql/geonames"
-    ports:
-      - "8893:8890"
+      DATASET: "/datasets/GeoNames/combined|http://localhost/sparql/geonames"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -146,9 +118,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_3: "/datasets/Jamendo/combined|http://localhost/sparql/jamendo"
-    ports:
-      - "8894:8890"
+      DATASET: "/datasets/Jamendo/combined|http://localhost/sparql/jamendo"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -159,9 +129,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/KEGG/combined|http://localhost/sparql/sp2b"
-    ports:
-      - "8895:8890"
+      DATASET: "/datasets/KEGG/combined|http://localhost/sparql/sp2b"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -172,9 +140,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_2: "/datasets/LMDB/combined|http://localhost/sparql/lmdb"
-    ports:
-      - "8896:8890"
+      DATASET: "/datasets/LMDB/combined|http://localhost/sparql/lmdb"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -185,9 +151,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_1: "/datasets/NYT/combined|http://localhost/sparql/nyt"
-    ports:
-      - "8897:8890"
+      DATASET: "/datasets/NYT/combined|http://localhost/sparql/nyt"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -198,9 +162,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_8: "/datasets/SP2B/combined|http://localhost/sparql/sp2b"
-    ports:
-      - "8898:8890"
+      DATASET: "/datasets/SP2B/combined|http://localhost/sparql/sp2b"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
@@ -211,9 +173,7 @@ services:
     image: openlink/virtuoso-opensource-7:7.2.16
     environment:
       DBA_PASSWORD: dba
-      DATASET_9: "/datasets/SWDFood/combined|http://localhost/sparql/swdfood"
-    ports:
-      - "8899:8890"
+      DATASET: "/datasets/SWDFood/combined|http://localhost/sparql/swdfood"
     volumes:
       - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
       - ../../datasets:/datasets
