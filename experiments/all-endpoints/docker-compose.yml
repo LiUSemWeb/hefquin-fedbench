@@ -15,7 +15,7 @@ services:
       - "3001:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-dbpedia.json:/config.json
+      - ./ldf-configs/dbpedia.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-drugbank:
@@ -24,7 +24,7 @@ services:
       - "3002:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-drugbank.json:/config.json
+      - ./ldf-configs/drugbank.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-geonames:
@@ -33,7 +33,7 @@ services:
       - "3003:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-geonames.json:/config.json
+      - ./ldf-configs/geonames.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-jamendo:
@@ -42,7 +42,7 @@ services:
       - "3004:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-jamendo.json:/config.json
+      - ./ldf-configs/jamendo.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-kegg:
@@ -51,7 +51,7 @@ services:
       - "3005:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-kegg.json:/config.json
+      - ./ldf-configs/kegg.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-lmdb:
@@ -60,7 +60,7 @@ services:
       - "3006:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-lmdb.json:/config.json
+      - ./ldf-configs/lmdb.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-nyt:
@@ -69,7 +69,7 @@ services:
       - "3007:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-nyt.json:/config.json
+      - ./ldf-configs/nyt.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-sp2b:
@@ -87,7 +87,7 @@ services:
       - "3009:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-swdfood.json:/config.json
+      - ./ldf-configs/swdfood.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   sparql-chebi:
