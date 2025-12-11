@@ -78,7 +78,7 @@ services:
       - "3008:3000"
     volumes:
       - ../../datasets:/datasets
-      - ldf-sp2b.json:/config.json
+      - ./ldf-configs/sp2b.json:/config.json
     command: ["/config.json", "3000", "1"]
 
   ldf-swdfood:
