@@ -2,6 +2,8 @@
 services:
   ldf-chebi:
     image: linkeddatafragments/server:v3.3.0
+    ports:
+      "3000:3000"
     volumes:
       - ../../datasets:/datasets
       - ./ldf-configs/chebi.json:/config.json
@@ -72,6 +74,8 @@ services:
 
   sparql-chebi:
     image: openlink/virtuoso-opensource-7:7.2.16
+    ports:
+      "8890:8890"
     environment:
       DBA_PASSWORD: dba
       DATASET: "/datasets/ChEBI/combined|http://localhost/sparql/chebi"
