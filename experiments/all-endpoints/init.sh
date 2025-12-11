@@ -26,6 +26,11 @@ while IFS= read -r var; do
   DATASET_VARS+=("$var")
 done < <(env | awk -F= '/^DATASET_[0-9]+=/{print $1}' | sort -t _ -k2,2n)
 
+# Add the unnumbered DATASET variable if defined
+if env | grep -q '^DATASET='; then
+  DATASET_VARS+=("DATASET")
+fi
+
 if ((${#DATASET_VARS[@]}==0)); then
   log "No DATASET_* environment variables found. Nothing to do."
   exit 0
