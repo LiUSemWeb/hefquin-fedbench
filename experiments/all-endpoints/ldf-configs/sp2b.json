@@ -2,7 +2,7 @@
   "@context": "https://linkedsoftwaredependencies.org/bundles/npm/@ldf/server/^3.0.0/components/context.jsonld",
   "@id": "urn:ldf-server:my",
   "import": "preset-qpf:config-defaults.json",
-
+  "baseURL": "http://localhost:8080/ldf/",
   "datasources": [
     {
       "@type": "HdtDatasource",
