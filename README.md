@@ -19,94 +19,71 @@ This will convert each of the datasets into a single `.hdt` that can be used by 
 
 ## Running the servers
 
-The FedBench datasets can be hosted using multiple configurations depending on the requirements. The different options are described below:
+The FedBench datasets can be hosted using multiple configurations depending on the requirements. For exposing all `FedBench` datasets using both `SPARQL` and `TPF/brTPF` interfaces, navigate to `experiments/all-endpoints` and run `docker compose up`.
 
-### Run as a single Virtuoso endpoint
-The dataset can be run in a single SPARQL endpoint with the datasets made available as named graphs. Navigate to 
 
-`experiments/virtuoso-named-graphs` and run:
-```bash
-docker compose up
+## Endpoint Overview
+
+This deployment exposes two types of federation-accessible endpoints:
+
+- **brTPF/TPF endpoints** (under `/ldf/...`)
+- **SPARQL endpoints** (under `/sparql/.../`)
+
+All endpoints are reverse-proxied through Nginx on:
+
+```
+http://localhost:8080/
 ```
 
-This will expose a single Virtuoso endpoint available at `http://localhost:8890/sparql`. The named graphs are listed below: 
-- http://example.org/graph/chebi
-- http://example.org/graph/dbpedia
-- http://example.org/graph/drugbank
-- http://example.org/graph/geonames
-- http://example.org/graph/jamendo
-- http://example.org/graph/kegg
-- http://example.org/graph/lmdb
-- http://example.org/graph/nyt
-- http://example.org/graph/sp2b
-- http://example.org/graph/swdfood
+---
 
-This configuration is useful for establishing a source assignment for the FedBench queries, since the named graphs can be bound to variables.
+## brTPF / TPF Endpoints
 
-### Run as SPARQL endpoints
-The datasets can be hosted in separate SPARQL endpoints. Navigate to `experiments/virtuoso-endpoints` and run:
-```bash
-docker compose up
+Each dataset is available as a Triple Pattern Fragment (TPF) or brTPF endpoint at:
+
 ```
-A proxy container will make the containers available at the following endpoints:
-
-- http://sparql.chebi.localhost
-- http://sparql.dbpedia.localhost
-- http://sparql.drugbank.localhost
-- http://sparql.geonames.localhost
-- http://sparql.jamendo.localhost
-- http://sparql.kegg.localhost
-- http://sparql.lmdb.localhost
-- http://sparql.nyt.localhost
-- http://sparql.sp2b.localhost
-- http://sparql.swdfood.localhost
-
-### Run as LDF server endpoints
-The datasets can be hosted in separate LDF endpoints that support both `TPF` and `brTPF` by default. Navigate to `experiments/ldf-endpoints` and run:
-```bash
-docker compose up
+/ldf/<dataset>
 ```
-A proxy container will make the containers available at the following endpoints:
 
-- http://ldf.chebi.localhost
-- http://ldf.dbpedia.localhost
-- http://ldf.drugbank.localhost
-- http://ldf.geonames.localhost
-- http://ldf.jamendo.localhost
-- http://ldf.kegg.localhost
-- http://ldf.lmdb.localhost
-- http://ldf.nyt.localhost
-- http://ldf.sp2b.localhost
-- http://ldf.swdfood.localhost
+| Dataset  | Endpoint |
+|----------|----------|
+| chebi    | http://localhost:8080/ldf/chebi |
+| dbpedia  | http://localhost:8080/ldf/dbpedia |
+| drugbank | http://localhost:8080/ldf/drugbank |
+| geonames | http://localhost:8080/ldf/geonames |
+| jamendo  | http://localhost:8080/ldf/jamendo |
+| kegg     | http://localhost:8080/ldf/kegg |
+| lmdb     | http://localhost:8080/ldf/lmdb |
+| nyt      | http://localhost:8080/ldf/nyt |
+| sp2b     | http://localhost:8080/ldf/sp2b |
+| swdfood  | http://localhost:8080/ldf/swdfood |
 
+Each endpoint forwards to the internal LDF server on port `3000`.
 
-### Run both SPARQL and LDF endpoints
-The datasets can be hosted as both SPARQL and LDF endpoints in parallell. Navigate to `experiments/all-endpoints` and run:
-```bash
-docker compose up
+---
+
+## SPARQL Endpoints
+
+Each dataset is also exposed as a SPARQL endpoint at:
+
 ```
-A proxy container will make the SPARQL endpoints available at:
+/sparql/<dataset>/
+```
 
-- http://sparql.chebi.localhost
-- http://sparql.dbpedia.localhost
-- http://sparql.drugbank.localhost
-- http://sparql.geonames.localhost
-- http://sparql.jamendo.localhost
-- http://sparql.kegg.localhost
-- http://sparql.lmdb.localhost
-- http://sparql.nyt.localhost
-- http://sparql.sp2b.localhost
-- http://sparql.swdfood.localhost
+| Dataset  | Endpoint |
+|----------|----------|
+| chebi    | http://localhost:8080/sparql/chebi/ |
+| dbpedia  | http://localhost:8080/sparql/dbpedia/ |
+| drugbank | http://localhost:8080/sparql/drugbank/ |
+| geonames | http://localhost:8080/sparql/geonames/ |
+| jamendo  | http://localhost:8080/sparql/jamendo/ |
+| kegg     | http://localhost:8080/sparql/kegg/ |
+| lmdb     | http://localhost:8080/sparql/lmdb/ |
+| nyt      | http://localhost:8080/sparql/nyt/ |
+| sp2b     | http://localhost:8080/sparql/sp2b/ |
+| swdfood  | http://localhost:8080/sparql/swdfood/ |
 
-A proxy container will make the LDF endpoints available at:
+Each endpoint forwards to a Virtuoso SPARQL service on port `8890`.
 
-- http://ldf.chebi.localhost
-- http://ldf.dbpedia.localhost
-- http://ldf.drugbank.localhost
-- http://ldf.geonames.localhost
-- http://ldf.jamendo.localhost
-- http://ldf.kegg.localhost
-- http://ldf.lmdb.localhost
-- http://ldf.nyt.localhost
-- http://ldf.sp2b.localhost
-- http://ldf.swdfood.localhost
+---
+
