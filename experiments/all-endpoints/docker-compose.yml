@@ -74,8 +74,6 @@ services:
 
   sparql-chebi:
     image: openlink/virtuoso-opensource-7:7.2.16
-    ports:
-      - "8890:8890"
     environment:
       DBA_PASSWORD: dba
       DATASET: "/datasets/ChEBI/combined|http://localhost/sparql/chebi"
