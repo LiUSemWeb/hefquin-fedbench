@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Clean RDF files in-place:
-- Replace spaces inside IRIs with '%20'
+Clean RDF/XML files in-place.
+
+Operations:
+- Percent-encode invalid characters inside IRIs
+- Normalize malformed xml:lang values such as 'fr_179213'
 
 Usage:
     clean_jamendo.py INPUT_FILE [-b|--backup]
@@ -15,24 +18,46 @@ import tempfile
 import os
 import shutil
 
-# Match resource IRI
+from tqdm import tqdm
+
+
 IRI_PATTERN = re.compile(r'rdf:resource="([^"]*)"')
 LANG_PATTERN = re.compile(r'xml:lang="([^"]*)"')
 
 
-def fix_iri(m):
-    iri = m.group(1)
+IRI_REPLACEMENTS = {
+    " ": "%20",
+    '"': "%22"
+}
+
+
+def clean_iri(iri: str) -> str:
+    """Clean and percent-encode invalid IRI characters."""
     iri = iri.rstrip()
-    iri = iri.replace(" ", "%20")
-    iri = iri.replace('"', "%22")
-    return f'rdf:resource="{iri}"'
+    
+    # IRI replacements
+    for old, new in IRI_REPLACEMENTS.items():
+        iri = iri.replace(old, new)
+
+    return iri
 
 
-def fix_lang(m):
-    lang = m.group(1)
+def fix_lang(match: re.Match) -> str:
+    """Normalize malformed xml:lang attributes."""
+
+    lang = match.group(1)
+
     if lang.startswith("fr_"):
-        lang = re.sub(r"([a-z]+).*", r"\1", lang)
+        lang = lang.split("_")[0]
+
     return f'xml:lang="{lang}"'
+
+
+def fix_iri(match: re.Match) -> str:
+    """Regex callback for cleaning resource IRIs."""
+
+    iri = clean_iri(match.group(1))
+    return f'rdf:resource="{iri}"'
 
 
 def clean(input_file: str, keep_backup: bool = False) -> None:
@@ -44,19 +69,24 @@ def clean(input_file: str, keep_backup: bool = False) -> None:
         backup_file = input_file + ".bak"
         shutil.copy2(input_file, backup_file)
         print(f"Backup created: {backup_file}")
-    
+
     dir_name = os.path.dirname(input_file) or "."
+
+    # count number of lines
+    with open(input_file, "r", encoding="utf-8") as f:
+        total_lines = sum(1 for _ in f)
+
     with tempfile.NamedTemporaryFile("w", delete=False, dir=dir_name, encoding="utf-8") as tmp:
         tmp_name = tmp.name
         with open(input_file, "r", encoding="utf-8") as f:
-            for line in f.readlines():
+            for line in tqdm(f, total=total_lines, desc="Cleaning"):
                 line = IRI_PATTERN.sub(fix_iri, line)
                 line = LANG_PATTERN.sub(fix_lang, line)
                 tmp.write(line)
     os.replace(tmp_name, input_file)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Clean N3 files")
     parser.add_argument("input_file", help="Path to the input N3 file")
     parser.add_argument(
