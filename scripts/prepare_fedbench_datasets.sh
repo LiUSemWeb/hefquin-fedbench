@@ -50,16 +50,16 @@ error() { echo -e "${RED}✖ $1${NC}"; }
 
 # RDF datasets
 declare -A RDF_DATASETS=(
-    #[ChEBI]="https://users.iit.demokritos.gr/~gmouchakis/dumps/ChEBI.tar.gz"
-    #[DrugBank]="https://users.iit.demokritos.gr/~gmouchakis/dumps/DrugBank.tar.gz"
-    #[KEGG]="https://users.iit.demokritos.gr/~gmouchakis/dumps/KEGG.tar.gz"
-    #[GeoNames]="https://users.iit.demokritos.gr/~gmouchakis/dumps/GeoNames.tar.gz"
-    [Jamendo]="https://users.iit.demokritos.gr/~gmouchakis/dumps/Jamendo.tar.gz"
-    #[LMDB]="https://users.iit.demokritos.gr/~gmouchakis/dumps/LMDB.tar.gz"
-    #[NYT]="https://users.iit.demokritos.gr/~gmouchakis/dumps/NYT.tar.gz"
-    #[SWDFood]="https://users.iit.demokritos.gr/~gmouchakis/dumps/SWDFood.tar.gz"
-    #[DBPedia-Subset]="https://users.iit.demokritos.gr/~gmouchakis/dumps/DBPedia-Subset.tar.gz"
-    #[SP2B]="https://www.ida.liu.se/~robke04/dump/SP2B.tar.gz"
+  [ChEBI]="https://users.iit.demokritos.gr/~gmouchakis/dumps/ChEBI.tar.gz"
+  [DBPedia-Subset]="https://users.iit.demokritos.gr/~gmouchakis/dumps/DBPedia-Subset.tar.gz"
+  [DrugBank]="https://users.iit.demokritos.gr/~gmouchakis/dumps/DrugBank.tar.gz"
+  [GeoNames]="https://users.iit.demokritos.gr/~gmouchakis/dumps/GeoNames.tar.gz"
+  [Jamendo]="https://users.iit.demokritos.gr/~gmouchakis/dumps/Jamendo.tar.gz"
+  [KEGG]="https://users.iit.demokritos.gr/~gmouchakis/dumps/KEGG.tar.gz"
+  [LMDB]="https://users.iit.demokritos.gr/~gmouchakis/dumps/LMDB.tar.gz"
+  [NYT]="https://users.iit.demokritos.gr/~gmouchakis/dumps/NYT.tar.gz"
+  [SP2B]="https://www.ida.liu.se/~robke04/dump/SP2B.tar.gz"
+  [SWDFood]="https://users.iit.demokritos.gr/~gmouchakis/dumps/SWDFood.tar.gz"
 )
 
 # -------------------------------------------------------------
@@ -110,11 +110,23 @@ done
 # -------------------------------------------------------------
 section "Cleaning datasets"
 
-
 # CheBI
 if [[ -v RDF_DATASETS[ChEBI] ]]; then
   info "Cleaning ChEBI..."
   ./scripts/clean_nt.py datasets/ChEBI/chebi.n3
+fi
+
+# DBPedia
+if [[ -v RDF_DATASETS[DBPedia-Subset] ]]; then
+  info "Cleaning DBPedia-Subset..."
+  for i in {0..18}; do
+    file="datasets/DBPedia-Subset/out${i}.nt"
+
+    if [[ -f "$file" ]]; then
+      info "Cleaning $file..."
+      ./scripts/clean_dbpedia.py "$file"
+    fi
+  done
 fi
 
 # KEGG
@@ -211,19 +223,19 @@ done
 # -------------------------------------------------------------
 section "Combining RDF datasets with Apache Jena RIOT"
 
-for dataset in "${!RDF_DATASETS[@]}"; do
-  dir="datasets/${dataset}"
-  info "Combining ${dir}..."
-  mkdir -p "${dir}/combined"
-  file="${dir}/combined/combined.nt"
-  {
-      find "${dir}" -maxdepth 1 -type f \( \
-          -name "*.ttl" -o -name "*.nt" -o -name "*.rdf" -o -name "*.owl" -o -name "*.n3" \
-      \) -print0 | xargs -0 riot --output=NT 2>/dev/null || true;
-  } | LC_ALL=C sort -u > "${file}"
+# for dataset in "${!RDF_DATASETS[@]}"; do
+#   dir="datasets/${dataset}"
+#   info "Combining ${dir}..."
+#   mkdir -p "${dir}/combined"
+#   file="${dir}/combined/combined.nt"
+#   {
+#       find "${dir}" -maxdepth 1 -type f \( \
+#           -name "*.ttl" -o -name "*.nt" -o -name "*.rdf" -o -name "*.owl" -o -name "*.n3" \
+#       \) -print0 | xargs -0 riot --output=NT 2>/dev/null || true;
+#   } | LC_ALL=C sort -u > "${file}"
 
-  echo "File: $file ($(wc -l < "$file") lines)"
-done
+#   echo "File: $file ($(wc -l < "$file") lines)"
+# done
 
 # -------------------------------------------------------------
 # DONE

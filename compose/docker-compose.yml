@@ -1,0 +1,31 @@
+services:
+  virtuoso:
+    image: openlink/virtuoso-opensource-7:7.2.16
+    environment:
+      DBA_PASSWORD: dba
+      DATASET_1: "/datasets/ChEBI/|http://localhost/sparql/chebi"             #   4,772,706 triples
+      DATASET_2: "/datasets/DBPedia-Subset/|http://localhost/sparql/dbpedia"  #  42,849,609 triples
+      DATASET_3: "/datasets/DrugBank/|http://localhost/sparql/drugbank"       #     517,023 triples
+      DATASET_4: "/datasets/GeoNames/|http://localhost/sparql/geonames"       # 107,950,085 triples
+      DATASET_5: "/datasets/Jamendo/|http://localhost/sparql/jamendo"         #   1,049,647 triples
+      DATASET_6: "/datasets/KEGG/|http://localhost/sparql/kegg"               #   1,090,830 triples
+      DATASET_7: "/datasets/LMDB/|http://localhost/sparql/lmdb"               #   6,147,996 triples
+      DATASET_8: "/datasets/NYT/|http://localhost/sparql/nyt"                 #     335,197 triples
+      DATASET_9: "/datasets/SP2B/|http://localhost/sparql/sp2b"               #  10,000,457 triples
+      DATASET_10: "/datasets/SWDFood/|http://localhost/sparql/swdfood"        #     103,595 triples
+    volumes:
+      - ./virtuoso.ini:/opt/virtuoso-opensource/database/virtuoso.ini
+      - ../datasets:/datasets
+      - ./init.sh:/init.sh
+    entrypoint: bash -lc "/init.sh & /virtuoso-entrypoint.sh"
+
+  nginx-sparql:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - virtuoso
+    volumes:
+      - ./nginx-sparql.conf:/etc/nginx/nginx.conf:ro
